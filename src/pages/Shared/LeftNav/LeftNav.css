@@ -1,0 +1,8 @@
+.catagory-link {
+    font-size: 20px;
+    color: #9F9F9F;
+}
+
+.catagory-link:hover {
+    background-color: rgb(247, 241, 232);
+}
