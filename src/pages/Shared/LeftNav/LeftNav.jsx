@@ -21,7 +21,7 @@ const LeftNav = () => {
             <h4>All Categoris</h4>
             <div>
                 {
-                    catagories.map(catagory => <Link className='d-block catagory-link text-decoration-none py-2 mb-2 ps-2' key={catagory.id}>
+                    catagories.map(catagory => <Link to={`/catagory/${catagory.id}`} className='d-block catagory-link text-decoration-none py-2 bg-light mb-2 ps-2' key={catagory.id}>
                         {catagory.name}
                     </Link>)
                 }
