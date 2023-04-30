@@ -5,8 +5,16 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
 
 const NavigationPages = () => {
-    const { user } = useContext(AuthContext);
-    console.log(user);
+    const { user, loggedOut } = useContext(AuthContext);
+
+    const handleLoggedOut = () => {
+        loggedOut()
+        .then(() => {})
+        .catch(error => {
+            console.log(error.message);
+        })
+    }
+
     return (
         <div className='bg-light'>
             <Container>
@@ -24,7 +32,7 @@ const NavigationPages = () => {
                                     user && <FaUserCircle style={{ width: '35px', height: '35px' }}></FaUserCircle>
                                 }
                                 {
-                                    user ? <Link to={`/login`}><button className='btn btn-primary'>Log Out</button></Link> : <Link to={`/login`}>
+                                    user ? <button onClick={handleLoggedOut} className='btn btn-primary'>Log Out</button> : <Link to={`/login`}>
                                         <button className='btn btn-primary'>Login</button>
                                     </Link>
                                 }

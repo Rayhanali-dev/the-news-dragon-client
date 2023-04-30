@@ -5,7 +5,7 @@ import EditorInsides from '../EditorInsides/EditorInsides';
 
 const News = () => {
     const news = useLoaderData();
-    const { title, image_url, details, category_id } = news
+    const { title, image_url, details, category_id } = news;
     return (
         <div>
             <Card>

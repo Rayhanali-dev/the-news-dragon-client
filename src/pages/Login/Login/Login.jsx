@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import './Login.css'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
 
 const Login = () => {
-    const {loggedInUser} = useContext(AuthContext)
+    const { loggedInUser } = useContext(AuthContext)
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+    console.log(location);
     const handleLogin = (event) => {
         event.preventDefault();
         const form = event.target;
@@ -13,13 +17,14 @@ const Login = () => {
         const password = form.password.value;
         console.log(email, password);
         loggedInUser(email, password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                navigate(from, { replace: true })
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
@@ -34,12 +39,9 @@ const Login = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" name='password' placeholder="Password" />
                 </Form.Group>
-                {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group> */}
                 <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
+                    We'll never share your email with anyone else.
+                </Form.Text>
                 <Button variant="primary" type="submit">
                     Login
                 </Button>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
@@ -7,6 +7,11 @@ const Register = () => {
 
     const {createUser} = useContext(AuthContext)
     console.log(createUser);
+    const [accepted, setAccepted] = useState(false);
+
+    const handleAccpeted = (event) => {
+        setAccepted(event.target.checked);
+    }
 
     const handlerRegister = (event) => {
         event.preventDefault();
@@ -15,6 +20,7 @@ const Register = () => {
         const photo = form.photoUrl.value;
         const email = form.email.value;
         const password = form.password.value;
+        form.reset();
         console.log(name, email, password, photo); 
         createUser(email, password)
         .then((result) => {
@@ -32,7 +38,7 @@ const Register = () => {
             <Form onSubmit={handlerRegister}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Your Name</Form.Label>
-                    <Form.Control type="text" name='name' placeholder="Enter your name" />
+                    <Form.Control type="text" name='name' required placeholder="Enter your name" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Photo Url</Form.Label>
@@ -40,24 +46,24 @@ const Register = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" name='email' placeholder="Enter email" />
+                    <Form.Control type="email" required name='email' placeholder="Enter email" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" name='password' placeholder="Password" />
+                    <Form.Control type="password" required name='password' placeholder="Password" />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Group className="mb-3" onClick={handleAccpeted} controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group>
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                 </Form.Text>
-                <Button variant="primary" type="submit">
+                <Button disabled={!accepted} variant="primary" type="submit">
                     Register
                 </Button>
                 <br />
                 <Form.Text>
-                    Already have an account? please <Link to={`/register`}>Register</Link>
+                    Already have an account? please <Link to={`/login`}>Login</Link>
                 </Form.Text>
             </Form>
         </div>
